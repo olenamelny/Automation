@@ -23,3 +23,4 @@ def stop(event, context):
 def start(event, context):
     ec2.start_instances(InstanceIds=instances)
     print('started  instances: ' + str(instances))
+    ##
