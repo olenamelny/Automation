@@ -127,3 +127,22 @@ resource "aws_lambda_permission" "allow_cloudwatch_start" {
   function_name = "${aws_lambda_function.start_ec2_lambda.function_name}"
   principal     = "events.amazonaws.com"
 }
+
+#==========
+# Scheduer
+#==========
+module "start_ec2_instance" {
+  source                         = "diodonfrost/lambda-scheduler-stop-start/aws"
+  name                           = "ec2_start"
+  #version                        = 
+  cloudwatch_schedule_expression = "cron(0 0 16 27 4 5 2023)"
+  schedule_action                = "start"
+  autoscaling_schedule           = "false"
+  ec2_schedule                   = "true"
+  rds_schedule                   = "false"
+  cloudwatch_alarm_schedule      = "false"
+  scheduler_tag                  = {
+    key   = "tostop"
+    value = "true"
+  }
+}
